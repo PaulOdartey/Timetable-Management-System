@@ -122,19 +122,20 @@ VALUES
 
 CREATE TABLE Enrollments (
     EnrollmentID INT PRIMARY KEY AUTO_INCREMENT,
-    StudentID INT NOT NULL,
+    UserID INT NOT NULL,
     CourseID INT NOT NULL,
-    FOREIGN KEY (StudentID) REFERENCES Students(StudentID) ON DELETE CASCADE,
-    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID) ON DELETE CASCADE
+    FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID) ON DELETE CASCADE,
+    UNIQUE (UserID, CourseID)
 );
 
--- Insert 3 enrollments
+-- Insert sample enrollments
 
-INSERT INTO Enrollments (StudentID, CourseID)
+INSERT INTO Enrollments (UserID, CourseID)
 VALUES
-    (1, 1),  -- Student #1 -> Course #1
-    (2, 2),  -- Student #2 -> Course #2
-    (3, 3);  -- Student #3 -> Course #3
+    (4, 1),  -- e.g., User with UserID 4 enrolled in CourseID 1
+    (5, 2),  -- e.g., User with UserID 5 enrolled in CourseID 2
+    (6, 3);  -- e.g., User with UserID 6 enrolled in CourseID 3
 
 
 -- 9. TABLE: ChangeRequest
