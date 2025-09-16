@@ -1,0 +1,1239 @@
+# Software Requirements Specification (SRS)
+## Timetable Management System - Core Features
+
+**Version:** 1.0  
+**Date:** June 2025  
+**Prepared by:** [Your Name]  
+**Project:** Final Year Project  
+
+---
+
+## 1. Introduction
+
+### 1.1 Purpose
+
+This Software Requirements Specification (SRS) document provides a comprehensive description of the core Timetable Management System designed for final year project implementation. The system focuses on six essential features that solve the fundamental problem of academic scheduling while maintaining professional quality and full responsive design.
+
+The system streamlines academic schedule management through user authentication, resource management, manual timetable creation, schedule viewing, notifications, and reporting capabilities. This focused approach ensures successful project completion within academic timeframes while demonstrating key computer science concepts.
+
+### 1.2 Product Scope
+
+The Timetable Management System is a responsive web-based application with the following **core capabilities**:
+
+**Primary Features:**
+1. **User Authentication & Role Management** - Secure login system with role-based access
+2. **Academic Resource Management** - Manage subjects, classrooms, time slots, and assignments
+3. **Manual Timetable Creation** - Create schedules with conflict detection
+4. **Schedule Viewing System** - Role-based schedule access and display
+5. **Basic Notification System** - Email alerts and system notifications
+6. **Reports & Export** - Generate PDFs and export functionality
+
+**Target Users:**
+- **Super Administrator** (manually created accounts with full system control)
+- **Faculty Members** (can register and request approval)
+- **Students** (can register and request approval)
+
+**Key Benefits:**
+- Controlled user onboarding through self-registration
+- Conflict-free manual schedule creation
+- Role-based schedule access
+- Mobile-responsive design for all devices
+- Professional reporting and export capabilities
+- Efficient academic resource management
+
+---
+
+## 2. User Roles and Permissions
+
+### 2.1 Super Administrator (Admin)
+**Account Creation:** Manual creation only - cannot register through the system
+
+**Core Privileges:**
+- Complete user management (approve, reject, activate, deactivate accounts)
+- Direct creation of faculty and student accounts
+- Academic resource management (subjects, classrooms, time slots)
+- Manual timetable creation and management  
+- System configuration and settings
+- Send notifications and announcements
+- Generate reports and analytics
+- Full system access and control
+
+### 2.2 Faculty Member
+**Account Creation:** Self-registration with administrative approval required
+
+**Core Privileges:**
+- View personal teaching schedules
+- View assigned subjects and classroom information
+- Update personal profile information
+- Receive schedule notifications and announcements
+- Export personal teaching schedules
+
+**Restrictions:**
+- Cannot modify timetables
+- Cannot access other faculty information
+- Cannot perform administrative functions
+
+### 2.3 Student
+**Account Creation:** Self-registration with administrative approval required
+
+**Core Privileges:**
+- View personal class timetables
+- Access course and subject information
+- Update personal profile information
+- Receive schedule notifications
+- Export and print personal schedules
+
+**Restrictions:**
+- Cannot modify any schedules
+- Cannot access other students' information
+- No administrative functions
+
+---
+
+## 3. Core Functional Requirements
+
+### 3.1 Feature 1: User Authentication & Role Management
+
+**FR-001:** The system shall provide a public registration form for faculty and students only
+**FR-002:** The system shall prevent admin accounts from being created through registration
+**FR-003:** The system shall require email verification for all self-registered accounts
+**FR-004:** The system shall validate registration inputs including:
+- Email uniqueness and valid format
+- Strong password requirements (8+ chars, mixed case, numbers, symbols)
+- Required personal information completeness
+- Department validation
+
+**FR-005:** The system shall assign pending status to self-registered accounts until admin approval
+**FR-006:** The system shall allow admins to review and approve/reject pending registrations
+**FR-007:** The system shall send email notifications for registration status updates
+**FR-008:** The system shall implement secure role-based access control
+**FR-009:** The system shall allow admins to create accounts directly with immediate active status
+**FR-010:** The system shall provide password reset functionality with secure tokens
+
+### 3.2 Feature 2: Academic Resource Management
+
+**FR-011:** The system shall allow admins to add, edit, and delete subjects with:
+- Subject code (unique identifier)
+- Subject name and description
+- Credit hours and duration
+- Department and semester information
+- Prerequisites (optional)
+
+**FR-012:** The system shall manage classroom information including:
+- Room number and building location
+- Capacity and type (lecture, lab, seminar)
+- Available facilities and equipment
+- Status (available, maintenance, reserved)
+
+**FR-013:** The system shall manage time slots configuration:
+- Day of week and time periods
+- Start and end times
+- Slot names and types
+- Active/inactive status
+
+**FR-014:** The system shall allow admins to assign faculty to subjects
+**FR-015:** The system shall prevent duplicate resource entries
+**FR-016:** The system shall validate resource data before saving
+
+### 3.3 Feature 3: Manual Timetable Creation
+
+**FR-017:** The system shall allow admins to create class schedules by selecting:
+- Subject from available list
+- Assigned faculty member
+- Available classroom
+- Time slot (day and period)
+- Target semester and section
+
+**FR-018:** The system shall implement conflict detection for:
+- Faculty double-booking (same time slot)
+- Classroom double-booking (same time slot)
+- Resource availability validation
+
+**FR-019:** The system shall display clear error messages for scheduling conflicts
+**FR-020:** The system shall allow admins to edit existing timetable entries
+**FR-021:** The system shall allow admins to delete timetable entries
+**FR-022:** The system shall validate all scheduling changes before saving
+**FR-023:** The system shall maintain timetable history for tracking changes
+
+### 3.4 Feature 4: Schedule Viewing System
+
+**FR-024:** Students shall view their personal class timetables with:
+- Subject names and codes
+- Faculty information
+- Classroom locations
+- Time and day information
+- Weekly calendar view
+
+**FR-025:** Faculty shall view their teaching schedules with:
+- Assigned subjects and sections
+- Classroom assignments
+- Student enrollment numbers
+- Weekly calendar view
+
+**FR-026:** Admins shall view complete timetables with:
+- All schedules by department/semester
+- Resource utilization overview
+- Conflict reports and warnings
+- Comprehensive calendar views
+
+**FR-027:** The system shall provide filtering options by:
+- Day of week
+- Time period
+- Department
+- Semester
+- Faculty/student
+
+**FR-028:** The system shall display schedules in multiple views:
+- Daily view
+- Weekly view
+- List view
+- Grid/table view
+
+### 3.5 Feature 5: Basic Notification System
+
+**FR-029:** The system shall send email notifications for:
+- Registration approval/rejection
+- Schedule creation and updates
+- System announcements
+- Password reset requests
+
+**FR-030:** The system shall provide in-app notifications for:
+- New schedule assignments
+- System alerts and warnings
+- Important announcements
+- Account status changes
+
+**FR-031:** The system shall allow admins to send broadcast messages to:
+- All users
+- Specific user roles (faculty/students)
+- Individual users
+- Department-based groups
+
+**FR-032:** The system shall maintain notification history and read status
+**FR-033:** The system shall provide notification preferences for users
+**FR-034:** The system shall use email templates for consistent messaging
+
+### 3.6 Feature 6: Reports & Export
+
+**FR-035:** The system shall generate PDF reports for:
+- Individual student schedules
+- Faculty teaching schedules
+- Complete departmental timetables
+- Classroom utilization reports
+
+**FR-036:** The system shall export data to Excel format for:
+- Timetable data
+- User lists
+- Resource inventories
+- Usage statistics
+
+**FR-037:** The system shall provide basic analytics including:
+- Total registered users by role
+- Resource utilization rates
+- Schedule distribution statistics
+- System usage metrics
+
+**FR-038:** The system shall allow custom report generation with:
+- Date range selection
+- Department filtering
+- User role filtering
+- Format selection (PDF/Excel)
+
+**FR-039:** The system shall provide print-friendly schedule formats
+**FR-040:** The system shall include institutional branding in reports
+
+---
+
+## 4. Non-Functional Requirements
+
+### 4.1 Responsive Design Requirements
+
+**NFR-001:** The system shall be fully responsive across all device types:
+- **Desktop**: Optimal experience on screens 1024px and wider
+- **Tablet**: Fully functional on screens 768px to 1023px  
+- **Mobile**: Complete functionality on screens 320px to 767px
+
+**NFR-002:** The system shall implement responsive design using:
+- CSS3 media queries for breakpoint-based layouts
+- Flexible grid systems (CSS Grid or Flexbox)
+- Responsive images and scalable media content
+- Touch-friendly interface elements for mobile devices
+- Adaptive font sizing and optimal spacing
+
+**NFR-003:** The system shall maintain consistent functionality across responsive breakpoints:
+- Navigation menus shall adapt to mobile hamburger or drawer styles
+- Data tables shall be responsive with horizontal scrolling or card layouts
+- Forms shall stack appropriately on mobile devices
+- Modal dialogs shall be mobile-optimized with proper touch targets
+- Search and filter interfaces shall be thumb-friendly
+
+**NFR-004:** The system shall support modern responsive frameworks:
+- Bootstrap 5+ or Tailwind CSS for responsive utilities
+- Proper viewport meta tag implementation
+- Progressive enhancement principles
+- Cross-browser compatibility on mobile and desktop
+
+### 4.2 Performance Requirements
+
+**NFR-005:** Web pages shall load within 3 seconds under normal conditions
+**NFR-006:** The system shall support concurrent access by up to 50 users
+**NFR-007:** Database queries shall execute within 2 seconds for standard operations
+**NFR-008:** The system shall maintain 95% uptime during academic hours
+**NFR-009:** Mobile pages shall load within 5 seconds on 3G connections
+
+### 4.3 Security Requirements
+
+**NFR-010:** All passwords must be hashed using bcrypt with minimum 12 salt rounds
+**NFR-011:** The system shall implement role-based access control (RBAC):
+- Super Admin: Full system access and control
+- Faculty: Personal schedule access only
+- Student: Personal academic information access only
+
+**NFR-012:** Admin account creation shall be restricted to manual database insertion
+**NFR-013:** The system shall enforce password policy:
+- Minimum 8 characters length
+- At least one uppercase and lowercase letter
+- At least one numeric digit and special character
+- Password expiry every 90 days for admin accounts
+
+**NFR-014:** The system shall implement session timeout after 30 minutes of inactivity
+**NFR-015:** All data shall be encrypted using AES-256 for data at rest and TLS 1.3 for transit
+**NFR-016:** The system shall log authentication attempts and administrative actions
+**NFR-017:** Email verification links shall expire after 24 hours
+**NFR-018:** Registration attempts shall be limited to 5 per IP address per hour
+
+### 4.4 Usability Requirements
+
+**NFR-019:** The system shall provide intuitive navigation with consistent menu structures
+**NFR-020:** Error messages shall be clear and provide actionable guidance
+**NFR-021:** The system shall include helpful tooltips and contextual assistance
+**NFR-022:** Forms shall include proper validation with real-time feedback
+**NFR-023:** The interface shall follow modern UI/UX design principles
+**NFR-024:** Loading states shall be indicated with progress indicators
+**NFR-025:** The system shall be accessible with proper ARIA labels and semantic HTML
+
+### 4.5 Compatibility Requirements
+
+**NFR-026:** The system shall support modern web browsers:
+- Google Chrome 90+
+- Mozilla Firefox 88+
+- Microsoft Edge 90+
+- Safari 14+ (for macOS/iOS)
+
+**NFR-027:** The system shall be compatible with:
+- Windows 10+, macOS 10.15+, Linux distributions
+- iOS 14+, Android 10+ for mobile devices
+- Minimum 2GB RAM for optimal performance
+
+---
+
+## 5. System Requirements
+
+### 5.1 Technology Stack
+
+**Frontend Technologies:**
+- HTML5 for semantic markup and accessibility
+- CSS3 with responsive frameworks (Bootstrap 5+ or Tailwind CSS)
+- JavaScript (ES6+) for client-side functionality
+- Font Awesome or similar for responsive icons
+
+**Backend Technology:**
+- PHP 8.0+ for server-side processing
+- Apache HTTP Server 2.4+ or Nginx
+
+**Database:**
+- MySQL 8.0+ or MariaDB 10.5+
+
+**Additional Libraries:**
+- PHPMailer for email functionality
+- TCPDF or similar for PDF generation
+- PhpSpreadsheet for Excel export
+
+### 5.2 Hardware Requirements
+
+**Server Requirements (Minimum):**
+- 4-core CPU processor
+- 8GB RAM
+- 50GB SSD storage
+- Stable internet connection (5+ Mbps)
+
+**Client Requirements:**
+- Modern web browser with JavaScript enabled
+- Internet connection (broadband recommended, mobile data compatible)
+- Minimum screen resolution: 320px width
+
+---
+
+## 6. Database Design
+
+### 6.1 Core Database Tables
+
+#### Table: users
+**Purpose:** Store user account information for authentication and role management
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| user_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique user identifier |
+| username | VARCHAR(50) | UNIQUE, NOT NULL | User login name |
+| email | VARCHAR(100) | UNIQUE, NOT NULL | User email address |
+| password_hash | VARCHAR(255) | NOT NULL | Encrypted password |
+| role | ENUM('admin', 'faculty', 'student') | NOT NULL | User role |
+| status | ENUM('pending', 'active', 'inactive', 'rejected') | DEFAULT 'pending' | Account status |
+| email_verified | BOOLEAN | DEFAULT FALSE | Email verification status |
+| verification_token | VARCHAR(255) | NULL | Email verification token |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Account creation date |
+| approved_by | INT | NULL | Admin who approved account |
+| approved_at | TIMESTAMP | NULL | Approval timestamp |
+
+#### Table: students
+**Purpose:** Store student-specific information
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| student_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique student identifier |
+| user_id | INT | FOREIGN KEY, UNIQUE | Reference to users table |
+| student_number | VARCHAR(20) | UNIQUE, NOT NULL | Student registration number |
+| first_name | VARCHAR(50) | NOT NULL | Student first name |
+| last_name | VARCHAR(50) | NOT NULL | Student last name |
+| department | VARCHAR(100) | NOT NULL | Student department |
+| year_of_study | INT | NOT NULL | Current academic year |
+| semester | INT | NOT NULL | Current semester |
+| phone | VARCHAR(15) | NULL | Contact phone number |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Record creation date |
+
+#### Table: faculty
+**Purpose:** Store faculty member information
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| faculty_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique faculty identifier |
+| user_id | INT | FOREIGN KEY, UNIQUE | Reference to users table |
+| employee_id | VARCHAR(20) | UNIQUE, NOT NULL | Faculty employee number |
+| first_name | VARCHAR(50) | NOT NULL | Faculty first name |
+| last_name | VARCHAR(50) | NOT NULL | Faculty last name |
+| department | VARCHAR(100) | NOT NULL | Faculty department |
+| designation | VARCHAR(50) | NOT NULL | Job title/position |
+| phone | VARCHAR(15) | NULL | Contact phone number |
+| specialization | TEXT | NULL | Area of expertise |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Record creation date |
+
+#### Table: subjects
+**Purpose:** Manage course/subject information
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| subject_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique subject identifier |
+| subject_code | VARCHAR(10) | UNIQUE, NOT NULL | Subject code (e.g., CS101) |
+| subject_name | VARCHAR(100) | NOT NULL | Full subject name |
+| credits | INT | NOT NULL | Credit hours |
+| duration_hours | INT | NOT NULL | Class duration in hours |
+| department | VARCHAR(100) | NOT NULL | Department offering subject |
+| semester | INT | NOT NULL | Intended semester |
+| prerequisites | TEXT | NULL | Prerequisites description |
+| description | TEXT | NULL | Subject description |
+| is_active | BOOLEAN | DEFAULT TRUE | Subject availability |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Creation timestamp |
+
+#### Table: classrooms
+**Purpose:** Store classroom information and resources
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| classroom_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique classroom identifier |
+| room_number | VARCHAR(20) | UNIQUE, NOT NULL | Room number/name |
+| building | VARCHAR(50) | NOT NULL | Building location |
+| capacity | INT | NOT NULL | Maximum student capacity |
+| type | ENUM('lecture', 'lab', 'seminar') | DEFAULT 'lecture' | Classroom type |
+| facilities | TEXT | NULL | Available equipment description |
+| status | ENUM('available', 'maintenance', 'reserved') | DEFAULT 'available' | Room status |
+| is_active | BOOLEAN | DEFAULT TRUE | Classroom availability |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Creation timestamp |
+
+#### Table: time_slots
+**Purpose:** Define available time periods for scheduling
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| slot_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique time slot identifier |
+| day_of_week | ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') | NOT NULL | Day of the week |
+| start_time | TIME | NOT NULL | Class start time |
+| end_time | TIME | NOT NULL | Class end time |
+| slot_name | VARCHAR(20) | NOT NULL | Slot name (e.g., Period 1) |
+| is_active | BOOLEAN | DEFAULT TRUE | Slot availability |
+
+#### Table: faculty_subjects
+**Purpose:** Assign faculty members to teach specific subjects
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| assignment_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique assignment identifier |
+| faculty_id | INT | FOREIGN KEY, NOT NULL | Reference to faculty table |
+| subject_id | INT | FOREIGN KEY, NOT NULL | Reference to subjects table |
+| assigned_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Assignment date |
+| assigned_by | INT | FOREIGN KEY, NOT NULL | Admin who made assignment |
+| is_active | BOOLEAN | DEFAULT TRUE | Assignment status |
+
+#### Table: timetables
+**Purpose:** Store created timetable schedules
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| timetable_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique timetable identifier |
+| subject_id | INT | FOREIGN KEY, NOT NULL | Reference to subjects table |
+| faculty_id | INT | FOREIGN KEY, NOT NULL | Reference to faculty table |
+| classroom_id | INT | FOREIGN KEY, NOT NULL | Reference to classrooms table |
+| slot_id | INT | FOREIGN KEY, NOT NULL | Reference to time_slots table |
+| section | VARCHAR(10) | DEFAULT 'A' | Class section |
+| semester | INT | NOT NULL | Target semester |
+| academic_year | VARCHAR(10) | NOT NULL | Academic year (e.g., 2024-25) |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Creation timestamp |
+| created_by | INT | FOREIGN KEY, NOT NULL | Admin who created entry |
+
+#### Table: enrollments
+**Purpose:** Track student enrollment in subjects
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| enrollment_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique enrollment identifier |
+| student_id | INT | FOREIGN KEY, NOT NULL | Reference to students table |
+| subject_id | INT | FOREIGN KEY, NOT NULL | Reference to subjects table |
+| section | VARCHAR(10) | DEFAULT 'A' | Class section |
+| semester | INT | NOT NULL | Enrollment semester |
+| academic_year | VARCHAR(10) | NOT NULL | Academic year |
+| enrollment_date | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Enrollment date |
+| status | ENUM('enrolled', 'dropped', 'completed') | DEFAULT 'enrolled' | Enrollment status |
+
+#### Table: notifications
+**Purpose:** Store system notifications and messages
+| Column Name | Data Type | Constraints | Description |
+|-------------|-----------|-------------|-------------|
+| notification_id | INT | PRIMARY KEY, AUTO_INCREMENT | Unique notification identifier |
+| title | VARCHAR(100) | NOT NULL | Notification title |
+| message | TEXT | NOT NULL | Notification content |
+| type | ENUM('info', 'success', 'warning', 'error') | DEFAULT 'info' | Notification type |
+| target_role | VARCHAR(20) | NULL | Target user role |
+| target_user_id | INT | FOREIGN KEY | Specific user target |
+| is_read | BOOLEAN | DEFAULT FALSE | Read status |
+| created_by | INT | FOREIGN KEY, NOT NULL | User who created notification |
+| created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | Creation timestamp |
+| expires_at | TIMESTAMP | NULL | Expiration date |
+
+---
+
+## 7. User Interface Requirements
+
+### 7.1 Responsive Design Specifications
+
+**Desktop Layout (1024px+):**
+- Multi-column layouts with sidebar navigation
+- Full-width data tables with sorting and filtering
+- Modal dialogs for forms and detailed views
+- Comprehensive dashboard with multiple widgets
+
+**Tablet Layout (768px - 1023px):**
+- Simplified navigation with collapsible menus
+- Responsive tables with horizontal scrolling
+- Touch-optimized buttons and form elements
+- Stacked layout for complex forms
+
+**Mobile Layout (320px - 767px):**
+- Hamburger menu navigation
+- Card-based layouts for data display
+- Full-screen modal forms
+- Thumb-friendly touch targets (44px minimum)
+- Simplified interfaces with essential features
+
+### 7.2 Navigation Structure
+
+**Admin Navigation:**
+- Dashboard
+- User Management (Pending Registrations, All Users)
+- Academic Resources (Subjects, Classrooms, Time Slots, Assignments)
+- Timetable Management (Create, View, Edit)
+- Reports & Export
+- Notifications
+- System Settings
+
+**Faculty Navigation:**
+- Dashboard
+- My Schedule
+- My Subjects
+- Profile Settings
+- Notifications
+
+**Student Navigation:**
+- Dashboard  
+- My Timetable
+- My Subjects
+- Profile Settings
+- Notifications
+
+### 7.3 Key Interface Components
+
+**Dashboard Widgets:**
+- User statistics (pending registrations, active users)
+- Quick actions (create timetable, send notification)
+- Recent activities and updates
+- System status indicators
+
+**Timetable Display:**
+- Weekly grid view with time slots and days
+- Color-coded subjects and faculty
+- Conflict indicators and warnings
+- Print and export options
+
+**Forms Design:**
+- Responsive with proper validation
+- Clear labels and helpful placeholders
+- Progress indicators for multi-step processes
+- Mobile-optimized input fields
+
+---
+
+## 8. Business Rules
+
+### 8.1 User Management Rules
+
+**BR-001:** Only faculty and students can register through the public registration system
+**BR-002:** Admin accounts must be created manually through database insertion or existing admin interface
+**BR-003:** All self-registered accounts must be approved by an administrator before system access
+**BR-004:** Email verification must be completed within 24 hours of registration, after which verification tokens expire
+**BR-005:** Users can only access features and data appropriate to their assigned role (RBAC enforcement)
+**BR-006:** Password changes must comply with the established security policy (8+ characters, mixed case, numbers, symbols)
+**BR-007:** Failed login attempts are limited to 5 attempts per account per hour to prevent brute force attacks
+**BR-008:** User accounts can only be in one status at a time: pending, active, inactive, or rejected
+**BR-009:** Only active users can log into the system and access their designated features
+**BR-010:** Admin approval is required for status changes from pending to active
+
+### 8.2 Academic Resource Management Rules
+
+**BR-011:** Subject codes must be unique across the entire system and follow institutional naming conventions
+**BR-012:** No two classrooms can have the same room number and building combination
+**BR-013:** Time slots cannot overlap on the same day (e.g., 9:00-10:00 AM cannot overlap with 9:30-10:30 AM)
+**BR-014:** Faculty can only be assigned to subjects within their department or specialization area
+**BR-015:** Classroom capacity must be a positive integer greater than zero
+**BR-016:** Subject credit hours must be between 1 and 6 credits
+**BR-017:** Time slots must have end time later than start time on the same day
+**BR-018:** Only active resources (subjects, classrooms, time slots) can be used in timetable creation
+**BR-019:** Resource deletion is only allowed if no active timetable entries reference the resource
+**BR-020:** Department names must be standardized and cannot contain special characters
+
+### 8.3 Timetable Creation and Scheduling Rules
+
+**BR-021:** No faculty member can be assigned to multiple classes at the same time slot (faculty conflict prevention)
+**BR-022:** No classroom can host multiple classes simultaneously (room conflict prevention)
+**BR-023:** No student can be enrolled in overlapping class schedules (student conflict prevention)
+**BR-024:** Timetable entries must reference valid, active resources (subject, faculty, classroom, time slot)
+**BR-025:** Each timetable entry must specify a unique combination of time slot, classroom for the same academic period
+**BR-026:** Faculty must be assigned to a subject before being scheduled to teach it
+**BR-027:** Students must be enrolled in a subject before appearing in its class schedule
+**BR-028:** Academic year format must follow "YYYY-YY" pattern (e.g., "2024-25")
+**BR-029:** Semester numbers must be positive integers (typically 1, 2, 3, etc.)
+**BR-030:** Section identifiers must be single characters or short codes (A, B, C, etc.)
+
+### 8.4 Enrollment and Assignment Rules
+
+**BR-031:** Students can only be enrolled in subjects appropriate for their current year and semester
+**BR-032:** Faculty can only be assigned to subjects within their qualification and expertise area
+**BR-033:** Student enrollment in a subject section cannot exceed the assigned classroom capacity
+**BR-034:** Faculty assignments must be approved by administrative users before taking effect
+**BR-035:** Students cannot be enrolled in subjects with unmet prerequisites
+**BR-036:** Enrollment status changes must follow logical progression: enrolled → dropped/completed
+**BR-037:** Faculty can only be assigned to one section of the same subject at the same time slot
+**BR-038:** Cross-department enrollments require additional administrative approval
+
+### 8.5 Notification and Communication Rules
+
+**BR-039:** System notifications must specify clear sender, recipient, and purpose
+**BR-040:** Email notifications are mandatory for account status changes (approval, rejection, activation)
+**BR-041:** Notification history must be maintained for audit purposes
+**BR-042:** Users can only view notifications intended for their role or specifically addressed to them
+**BR-043:** System announcements can be targeted by role (all users, faculty only, students only)
+**BR-044:** Notification expiration dates must be respected, and expired notifications should not display
+**BR-045:** Email templates must include institutional branding and contact information
+**BR-046:** Urgent notifications must be delivered immediately, while routine notifications can be batched
+
+### 8.6 Reporting and Data Export Rules
+
+**BR-047:** Reports can only be generated by users with appropriate permissions (admins for system reports, users for personal reports)
+**BR-048:** Personal schedule reports can only be accessed by the respective user or system administrators
+**BR-049:** Exported data must maintain data integrity and accuracy with the source database
+**BR-050:** Report generation must include timestamp and user identification for audit purposes
+**BR-051:** PDF reports must include institutional letterhead and official formatting
+**BR-052:** Excel exports must preserve data types and formatting for proper readability
+**BR-053:** Bulk reports require administrative privileges and appropriate system resources
+**BR-054:** Report access must be logged for security and audit purposes
+
+### 8.7 Data Integrity and Security Rules
+
+**BR-055:** All passwords must be hashed using bcrypt with minimum 12 salt rounds before database storage
+**BR-056:** User sessions must timeout after 30 minutes of inactivity for security
+**BR-057:** Administrative actions must be logged with timestamp, user identification, and action details
+**BR-058:** Database transactions must be atomic - either all operations succeed or all fail
+**BR-059:** Personal information updates require user authentication confirmation
+**BR-060:** System backups must be performed regularly without affecting system performance
+**BR-061:** Role-based access control must be enforced at both application and database levels
+**BR-062:** Cross-site scripting (XSS) and SQL injection attacks must be prevented through input validation
+
+---
+
+## 9. UML Diagrams
+
+### 9.1 Use Case Diagram
+
+#### Primary Actors:
+- **Super Administrator** (manually created accounts)
+- **Faculty Member** (self-registered, requires admin approval)
+- **Student** (self-registered, requires admin approval)
+
+#### Use Cases by Actor:
+
+**Super Administrator Use Cases:**
+- Manage User Registrations (review, approve, reject pending accounts)
+- Create User Accounts (direct creation of faculty/student accounts)
+- Manage Academic Resources (CRUD operations for subjects, classrooms, time slots)
+- Create and Manage Timetables (manual schedule creation with conflict detection)
+- Assign Faculty to Subjects (academic resource allocation)
+- Manage Student Enrollments (enroll students in subjects and sections)
+- Generate System Reports (usage statistics, resource utilization, user reports)
+- Send System Notifications (announcements, alerts, important messages)
+- Export System Data (PDF reports, Excel files, backup data)
+- Monitor System Activity (view logs, user activities, system performance)
+
+**Faculty Member Use Cases:**
+- Register Account (self-registration with institutional email)
+- Verify Email Address (complete email verification process)
+- Login to System (secure authentication with role verification)
+- View Personal Teaching Schedule (assigned subjects, time slots, classrooms)
+- View Assigned Subjects (subject details, enrolled students, resources)
+- Update Personal Profile (contact information, specialization, preferences)
+- Receive Schedule Notifications (schedule changes, system announcements)
+- Export Personal Schedule (PDF format for printing and sharing)
+- Logout from System (secure session termination)
+
+**Student Use Cases:**
+- Register Account (self-registration with student credentials)
+- Verify Email Address (complete email verification process)
+- Login to System (secure authentication with role verification)
+- View Personal Class Schedule (enrolled subjects, faculty, time slots, classrooms)
+- View Subject Information (subject details, faculty information, prerequisites)
+- View Enrollment Status (enrolled subjects, sections, academic progress)
+- Update Personal Profile (contact information, academic details)
+- Receive Schedule Notifications (schedule changes, announcements)
+- Export Personal Schedule (PDF format for academic planning)
+- Logout from System (secure session termination)
+
+#### System Use Cases (Internal):
+- Validate User Credentials (authentication verification)
+- Detect Scheduling Conflicts (prevent double-booking of resources)
+- Send Email Notifications (automated email delivery system)
+- Generate PDF Reports (document creation and formatting)
+- Maintain Audit Logs (security and activity tracking)
+- Backup System Data (data protection and recovery)
+
+### 9.2 Class Diagram Structure
+
+#### Core Domain Classes:
+
+**User (Abstract Base Class)**
+```
++ user_id: int
++ username: string
++ email: string
++ password_hash: string
++ role: string
++ status: string
++ email_verified: boolean
++ created_at: timestamp
++ login(): boolean
++ logout(): void
++ updateProfile(): boolean
++ resetPassword(): boolean
++ verifyEmail(): boolean
+```
+
+**SuperAdministrator (extends User)**
+```
++ manageUsers(): boolean
++ createTimetable(): boolean
++ assignFacultyToSubject(): boolean
++ generateReports(): Report[]
++ sendNotifications(): boolean
++ approveRegistration(): boolean
++ manageResources(): boolean
+```
+
+**Faculty (extends User)**
+```
++ faculty_id: int
++ employee_id: string
++ first_name: string
++ last_name: string
++ department: string
++ designation: string
++ specialization: string
++ viewTeachingSchedule(): Timetable[]
++ viewAssignedSubjects(): Subject[]
++ exportSchedule(): PDF
++ updateProfile(): boolean
+```
+
+**Student (extends User)**
+```
++ student_id: int
++ student_number: string
++ first_name: string
++ last_name: string
++ department: string
++ year_of_study: int
++ semester: int
++ viewClassSchedule(): Timetable[]
++ viewEnrollments(): Enrollment[]
++ exportSchedule(): PDF
++ updateProfile(): boolean
+```
+
+**Subject**
+```
++ subject_id: int
++ subject_code: string
++ subject_name: string
++ credits: int
++ duration_hours: int
++ department: string
++ semester: int
++ prerequisites: string
++ description: string
++ is_active: boolean
++ validateSubjectCode(): boolean
++ checkPrerequisites(): boolean
+```
+
+**Classroom**
+```
++ classroom_id: int
++ room_number: string
++ building: string
++ capacity: int
++ type: string
++ facilities: string
++ status: string
++ is_active: boolean
++ checkAvailability(): boolean
++ validateCapacity(): boolean
+```
+
+**TimeSlot**
+```
++ slot_id: int
++ day_of_week: string
++ start_time: time
++ end_time: time
++ slot_name: string
++ is_active: boolean
++ validateTimeRange(): boolean
++ checkOverlap(): boolean
+```
+
+**Timetable**
+```
++ timetable_id: int
++ subject_id: int
++ faculty_id: int
++ classroom_id: int
++ slot_id: int
++ section: string
++ semester: int
++ academic_year: string
++ created_at: timestamp
++ detectConflicts(): ConflictReport
++ validateSchedule(): boolean
++ updateSchedule(): boolean
+```
+
+**Enrollment**
+```
++ enrollment_id: int
++ student_id: int
++ subject_id: int
++ section: string
++ semester: int
++ academic_year: string
++ status: string
++ enrollment_date: timestamp
++ validateEnrollment(): boolean
++ checkCapacity(): boolean
+```
+
+**Notification**
+```
++ notification_id: int
++ title: string
++ message: string
++ type: string
++ target_role: string
++ target_user_id: int
++ is_read: boolean
++ created_at: timestamp
++ expires_at: timestamp
++ sendNotification(): boolean
++ markAsRead(): boolean
+```
+
+#### Key Relationships:
+- **Inheritance**: SuperAdministrator, Faculty, Student inherit from User
+- **Association**: Faculty teaches multiple Subjects (many-to-many)
+- **Association**: Student enrolls in multiple Subjects (many-to-many)
+- **Composition**: Timetable composed of Subject, Faculty, Classroom, TimeSlot
+- **Aggregation**: Classroom contains multiple Timetable entries
+- **Dependency**: Notification depends on User for targeting
+
+### 9.3 Sequence Diagrams
+
+#### Sequence Diagram 1: User Registration and Approval Process
+
+**Participants:** Student/Faculty, System, Database, EmailService, Admin
+
+**Flow:**
+1. Student/Faculty → System: submitRegistration(userData)
+2. System → Database: validateEmailUniqueness(email)
+3. Database → System: validationResult
+4. System → Database: createPendingUser(userData)
+5. System → EmailService: sendVerificationEmail(email, token)
+6. EmailService → Student/Faculty: verificationEmail
+7. Student/Faculty → System: verifyEmail(token)
+8. System → Database: updateEmailVerification(user_id)
+9. Admin → System: reviewPendingRegistrations()
+10. System → Database: getPendingUsers()
+11. Database → System: pendingUsersList
+12. Admin → System: approveRegistration(user_id)
+13. System → Database: updateUserStatus(user_id, 'active')
+14. System → EmailService: sendApprovalEmail(email)
+15. EmailService → Student/Faculty: approvalNotification
+
+#### Sequence Diagram 2: Timetable Creation with Conflict Detection
+
+**Participants:** Admin, System, ConflictDetector, Database
+
+**Flow:**
+1. Admin → System: createTimetableEntry(scheduleData)
+2. System → ConflictDetector: checkFacultyConflict(faculty_id, slot_id)
+3. ConflictDetector → Database: queryFacultySchedule(faculty_id, slot_id)
+4. Database → ConflictDetector: existingSchedules
+5. ConflictDetector → System: conflictResult
+6. System → ConflictDetector: checkClassroomConflict(classroom_id, slot_id)
+7. ConflictDetector → Database: queryClassroomSchedule(classroom_id, slot_id)
+8. Database → ConflictDetector: existingBookings
+9. ConflictDetector → System: conflictResult
+10. System → Database: insertTimetableEntry(scheduleData) [if no conflicts]
+11. Database → System: insertionResult
+12. System → Admin: scheduleCreated(success/failure)
+
+#### Sequence Diagram 3: Student Schedule Viewing
+
+**Participants:** Student, System, Database, PDFGenerator
+
+**Flow:**
+1. Student → System: login(credentials)
+2. System → Database: authenticateUser(credentials)
+3. Database → System: authenticationResult
+4. Student → System: viewMySchedule()
+5. System → Database: getStudentEnrollments(student_id)
+6. Database → System: enrollmentsList
+7. System → Database: getTimetableForEnrollments(enrollments)
+8. Database → System: scheduleData
+9. System → Student: displaySchedule(scheduleData)
+10. Student → System: exportToPDF()
+11. System → PDFGenerator: generateSchedulePDF(scheduleData)
+12. PDFGenerator → System: pdfDocument
+13. System → Student: downloadPDF(pdfDocument)
+
+---
+
+## 10. Entity Relationship (ER) Diagram
+
+### 10.1 ER Diagram Entities and Relationships
+
+#### Primary Entities:
+
+**USERS Entity**
+- **Attributes:** user_id (PK), username, email, password_hash, role, status, email_verified, verification_token, created_at, approved_by, approved_at
+- **Key Constraints:** user_id is primary key, email and username are unique
+- **Domain Constraints:** role ∈ {admin, faculty, student}, status ∈ {pending, active, inactive, rejected}
+
+**STUDENTS Entity**
+- **Attributes:** student_id (PK), user_id (FK), student_number, first_name, last_name, department, year_of_study, semester, phone, created_at
+- **Key Constraints:** student_id is primary key, user_id is foreign key referencing USERS, student_number is unique
+- **Relationship:** One-to-One with USERS (each student record corresponds to exactly one user account)
+
+**FACULTY Entity**
+- **Attributes:** faculty_id (PK), user_id (FK), employee_id, first_name, last_name, department, designation, phone, specialization, created_at
+- **Key Constraints:** faculty_id is primary key, user_id is foreign key referencing USERS, employee_id is unique
+- **Relationship:** One-to-One with USERS (each faculty record corresponds to exactly one user account)
+
+**SUBJECTS Entity**
+- **Attributes:** subject_id (PK), subject_code, subject_name, credits, duration_hours, department, semester, prerequisites, description, is_active, created_at
+- **Key Constraints:** subject_id is primary key, subject_code is unique
+- **Domain Constraints:** credits ∈ {1,2,3,4,5,6}, duration_hours > 0, semester > 0
+
+**CLASSROOMS Entity**
+- **Attributes:** classroom_id (PK), room_number, building, capacity, type, facilities, status, is_active, created_at
+- **Key Constraints:** classroom_id is primary key, (room_number, building) is unique
+- **Domain Constraints:** capacity > 0, type ∈ {lecture, lab, seminar}, status ∈ {available, maintenance, reserved}
+
+**TIME_SLOTS Entity**
+- **Attributes:** slot_id (PK), day_of_week, start_time, end_time, slot_name, is_active
+- **Key Constraints:** slot_id is primary key, (day_of_week, start_time, end_time) is unique
+- **Domain Constraints:** day_of_week ∈ {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday}, end_time > start_time
+
+**TIMETABLES Entity**
+- **Attributes:** timetable_id (PK), subject_id (FK), faculty_id (FK), classroom_id (FK), slot_id (FK), section, semester, academic_year, created_at, created_by (FK)
+- **Key Constraints:** timetable_id is primary key, foreign keys reference respective parent entities
+- **Unique Constraints:** (slot_id, classroom_id) is unique, (slot_id, faculty_id) is unique
+- **Domain Constraints:** semester > 0, academic_year follows "YYYY-YY" format
+
+#### Relationship Entities:
+
+**FACULTY_SUBJECTS Entity (Many-to-Many Relationship)**
+- **Attributes:** assignment_id (PK), faculty_id (FK), subject_id (FK), assigned_date, assigned_by (FK), is_active
+- **Purpose:** Manages which faculty members are qualified/assigned to teach which subjects
+- **Constraints:** (faculty_id, subject_id) combination should be unique for active assignments
+
+**ENROLLMENTS Entity (Many-to-Many Relationship)**
+- **Attributes:** enrollment_id (PK), student_id (FK), subject_id (FK), section, semester, academic_year, enrollment_date, status
+- **Purpose:** Tracks which students are enrolled in which subjects and sections
+- **Domain Constraints:** status ∈ {enrolled, dropped, completed}
+
+**NOTIFICATIONS Entity**
+- **Attributes:** notification_id (PK), title, message, type, target_role, target_user_id (FK), is_read, created_by (FK), created_at, expires_at
+- **Purpose:** System-wide communication and user notifications
+- **Domain Constraints:** type ∈ {info, success, warning, error}
+
+### 10.2 Relationship Details
+
+#### One-to-One Relationships:
+1. **USERS ↔ STUDENTS** (1:1)
+   - Each user account can have at most one student profile
+   - Each student profile belongs to exactly one user account
+   - Implementation: user_id as foreign key in STUDENTS table
+
+2. **USERS ↔ FACULTY** (1:1)
+   - Each user account can have at most one faculty profile
+   - Each faculty profile belongs to exactly one user account
+   - Implementation: user_id as foreign key in FACULTY table
+
+#### One-to-Many Relationships:
+1. **USERS → TIMETABLES** (1:M) via created_by
+   - One admin user can create multiple timetable entries
+   - Each timetable entry is created by exactly one admin user
+
+2. **SUBJECTS → TIMETABLES** (1:M)
+   - One subject can appear in multiple timetable slots (different sections/times)
+   - Each timetable entry is for exactly one subject
+
+3. **FACULTY → TIMETABLES** (1:M)
+   - One faculty member can teach multiple classes (different subjects/times)
+   - Each timetable entry has exactly one faculty member assigned
+
+4. **CLASSROOMS → TIMETABLES** (1:M)
+   - One classroom can host multiple classes (different times)
+   - Each timetable entry uses exactly one classroom
+
+5. **TIME_SLOTS → TIMETABLES** (1:M)
+   - One time slot can be used for multiple classes (different rooms/subjects)
+   - Each timetable entry occupies exactly one time slot
+
+#### Many-to-Many Relationships:
+1. **FACULTY ↔ SUBJECTS** via FACULTY_SUBJECTS
+   - Many faculty members can be qualified to teach many subjects
+   - Many subjects can be taught by many faculty members
+   - Attributes: assignment_date, assigned_by, is_active
+
+2. **STUDENTS ↔ SUBJECTS** via ENROLLMENTS
+   - Many students can enroll in many subjects
+   - Many subjects can have many students enrolled
+   - Attributes: section, semester, academic_year, enrollment_date, status
+
+### 10.3 ER Diagram Constraints and Rules
+
+#### Referential Integrity Constraints:
+- All foreign keys must reference existing primary keys in parent tables
+- Deletion of parent records should cascade appropriately or be restricted
+- Updates to primary keys should cascade to referencing foreign keys
+
+#### Domain Constraints:
+- Email addresses must be unique across all users
+- Subject codes must follow institutional naming patterns
+- Time slots cannot overlap within the same day
+- Classroom capacity must be positive integers
+- Academic years must follow "YYYY-YY" format
+
+#### Business Rule Constraints:
+- No faculty member can be scheduled in multiple locations at the same time (enforced via unique constraint on (slot_id, faculty_id) in TIMETABLES)
+- No classroom can host multiple classes simultaneously (enforced via unique constraint on (slot_id, classroom_id) in TIMETABLES)
+- Students cannot be enrolled in subjects that exceed classroom capacity
+- Faculty can only be assigned to subjects within their department/specialization
+
+#### Participation Constraints:
+- Every STUDENT must have a corresponding USER record (total participation)
+- Every FACULTY must have a corresponding USER record (total participation)
+- Every TIMETABLE entry must reference valid SUBJECT, FACULTY, CLASSROOM, and TIME_SLOT (total participation)
+- ENROLLMENTS are optional for STUDENTS (partial participation - students may not be enrolled in any subjects initially)
+
+---
+
+## 11. Testing Requirements
+
+### 8.1 Functional Testing
+
+**User Authentication Testing:**
+- Registration form validation
+- Email verification process
+- Login/logout functionality
+- Role-based access control
+- Password reset workflow
+
+**Resource Management Testing:**
+- CRUD operations for subjects, classrooms, time slots
+- Faculty-subject assignment process
+- Data validation and error handling
+- Duplicate prevention mechanisms
+
+**Timetable Creation Testing:**
+- Manual schedule creation process
+- Conflict detection algorithms
+- Edit and delete operations
+- Data integrity maintenance
+
+### 8.2 Responsive Design Testing
+
+**Cross-Device Testing:**
+- iPhone/Android mobile devices
+- iPad/Android tablets
+- Desktop browsers (Chrome, Firefox, Safari, Edge)
+- Different screen resolutions and orientations
+
+**Performance Testing:**
+- Page load times on different devices
+- Mobile data usage optimization
+- Touch interaction responsiveness
+- Offline behavior (graceful degradation)
+
+### 8.3 Security Testing
+
+**Authentication Security:**
+- Password strength validation
+- Session management
+- SQL injection prevention
+- Cross-site scripting (XSS) protection
+- Cross-site request forgery (CSRF) protection
+
+---
+
+## 9. Implementation Timeline
+
+### 9.1 Development Phases
+
+**Phase 1: Foundation (Weeks 1-4)**
+- Database design and setup
+- User authentication system
+- Basic responsive layout
+- Admin user creation
+
+**Phase 2: Core Features (Weeks 5-8)**
+- Academic resource management
+- Faculty-subject assignments
+- Basic notification system
+- User profile management
+
+**Phase 3: Timetable System (Weeks 9-10)**
+- Manual timetable creation
+- Conflict detection implementation
+- Schedule viewing interfaces
+- Mobile optimization
+
+**Phase 4: Reports & Polish (Weeks 11-12)**
+- PDF generation and export
+- Final responsive design adjustments
+- Testing and bug fixes
+- Documentation completion
+
+### 9.2 Deliverables Schedule
+
+**Week 4:** Working authentication system with responsive design
+**Week 8:** Complete resource management with user interfaces
+**Week 10:** Functional timetable creation and viewing system
+**Week 12:** Complete system with reports, documentation, and testing
+
+---
+
+## 10. Success Criteria
+
+### 10.1 Functional Success Criteria
+
+- ✅ All 6 core features implemented and working
+- ✅ Role-based access control functioning correctly
+- ✅ Conflict detection preventing scheduling errors
+- ✅ Email notifications sending successfully
+- ✅ PDF reports generating properly
+- ✅ Responsive design working on all target devices
+
+### 10.2 Technical Success Criteria
+
+- ✅ System deployable on XAMPP/LAMP stack
+- ✅ Database properly normalized and optimized
+- ✅ Code follows PHP best practices
+- ✅ Security requirements implemented
+- ✅ Performance benchmarks met
+- ✅ Cross-browser compatibility achieved
+
+### 10.3 Academic Success Criteria
+
+- ✅ Comprehensive documentation completed
+- ✅ System demonstrable with realistic scenarios
+- ✅ Code quality suitable for academic evaluation
+- ✅ Project scope appropriate for final year level
+- ✅ Technical concepts properly implemented
+- ✅ Professional presentation ready
+
+---
+
+## 12. Future Enhancements and Scalability
+
+### 12.1 System Configuration Management
+The system architecture is designed to support future implementation of advanced configuration features:
+
+**Dynamic System Settings:**
+- Administrative control over system parameters (academic year, semester settings)
+- Customizable institutional configurations (university name, contact information)
+- Feature toggles for enabling/disabling system components
+- Maintenance mode controls for system updates
+
+**Scalability Provisions:**
+- Database design includes system_settings table for configuration management
+- Role-based access can be extended with additional permission levels
+- Notification system can support advanced targeting and scheduling
+- Reporting module can be enhanced with custom report builders
+
+### 12.2 Advanced Features for Future Development
+**Enhanced Timetable Management:**
+- Automated timetable generation algorithms (genetic algorithms, constraint satisfaction)
+- Faculty schedule change request workflows with approval processes
+- Advanced conflict resolution with alternative suggestions
+- Resource optimization and utilization analytics
+
+**Extended User Management:**
+- Bulk user import/export functionality
+- Advanced user profile management with custom fields
+- Integration with external authentication systems (LDAP, Active Directory)
+- Multi-campus and department hierarchy support
+
+**Analytics and Intelligence:**
+- Advanced reporting with data visualization dashboards
+- Predictive analytics for resource planning
+- Usage statistics and system performance monitoring
+- Academic performance correlation with scheduling patterns
+
+### 12.3 Implementation Strategy
+The current system foundation enables incremental enhancement without major architectural changes. The modular design approach ensures that future features can be integrated seamlessly while maintaining system stability and performance.
+
+---
+
+## Conclusion
+
+This focused Software Requirements Specification provides a solid foundation for developing a successful final year project. The 6 core features offer comprehensive functionality while remaining achievable within academic timeframes. The emphasis on responsive design ensures modern usability across all devices.
+
+The system demonstrates key computer science concepts including database design, web development, security implementation, user interface design, and system integration. This scope provides excellent opportunities for learning while delivering a professional-quality solution that effectively solves the timetable management problem.
+
+The inclusion of future enhancement considerations demonstrates forward-thinking design and scalability awareness, while maintaining focus on achievable core objectives. Regular progress monitoring and iterative development will ensure successful completion and an impressive final demonstration.

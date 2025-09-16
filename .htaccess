@@ -1,0 +1,17 @@
+# Redirect base URL to public/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Adjust base to your subfolder path
+    RewriteBase /timetable-management/
+
+    # If the request is exactly the project root, redirect to /public/
+    RewriteRule ^$ public/ [L,R=302]
+
+    # Otherwise, serve existing files/directories normally
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+</IfModule>
+
+# If mod_rewrite is not available, fall back to a simple redirect using meta refresh can be added to index.php (already handled in PHP)

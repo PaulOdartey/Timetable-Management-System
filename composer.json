@@ -1,0 +1,27 @@
+{
+    "name": "university/timetable-management",
+    "description": "University Timetable Management System - Final Year Project",
+    "type": "project",
+    "require": {
+        "php": ">=8.0",
+        "phpmailer/phpmailer": "^6.8",
+        "tecnickcom/tcpdf": "^6.6",
+        "phpoffice/phpspreadsheet": "^1.29",
+        "respect/validation": "^2.2",
+        "nesbot/carbon": "^2.69",
+        "monolog/monolog": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "TimetableManagement\\": "classes/"
+        },
+        "files": [
+            "includes/functions.php"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
+}

@@ -1,0 +1,63 @@
+# Timetable Management System - Git Ignore File
+
+# Sensitive Configuration Files
+config/database.php
+config/email.php
+.env
+
+# User Uploads and Generated Files
+uploads/*
+!uploads/.htaccess
+exports/*
+!exports/.htaccess
+
+# Cache and Temporary Files
+cache/*
+!cache/.htaccess
+
+# Log Files
+logs/*.log
+logs/*
+!logs/.htaccess
+
+# Backup Files
+admin/backups/*.sql
+admin/backups/*.error.log
+
+# Composer Dependencies
+vendor/
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Development and Test Files
+test-*.php
+debug-*.php
+setup-*.php
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+
+# Node Modules (if any)
+node_modules/
+
+# Environment Files
+.env.local
+.env.development
+.env.test
+.env.production
