@@ -11,6 +11,7 @@ define('SYSTEM_ACCESS', true);
 
 // Include configuration
 require_once '../config/config.php';
+require_once '../config/database.php';
 require_once '../classes/User.php';
 
 // Check if user is logged in
@@ -23,6 +24,19 @@ if (!User::isLoggedIn()) {
 $userId = User::getCurrentUserId();
 $userRole = User::getCurrentUserRole();
 $username = $_SESSION['username'] ?? 'User';
+
+// Attempt to load user's profile image for display on logout confirmation
+$profileImage = null;
+$profileImageUrl = null;
+try {
+    $db = Database::getInstance();
+    $row = $db->fetchRow("SELECT profile_image FROM users WHERE user_id = ?", [$userId]);
+    $profileImage = $row['profile_image'] ?? null;
+    $profileImageUrl = $profileImage ? (UPLOADS_URL . 'profiles/' . $profileImage) : (ASSETS_URL . 'images/default-avatar.svg');
+} catch (Exception $e) {
+    // Fallback to default avatar if database isn't available for any reason
+    $profileImageUrl = ASSETS_URL . 'images/default-avatar.svg';
+}
 
 // Handle logout confirmation
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -224,6 +238,13 @@ $pageTitle = 'Logout Confirmation - ' . SYSTEM_NAME;
             font-size: 1.5rem;
             font-weight: 700;
             flex-shrink: 0;
+        }
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
         }
         
         .user-details {
@@ -458,7 +479,11 @@ $pageTitle = 'Logout Confirmation - ' . SYSTEM_NAME;
             <!-- User Information -->
             <div class="user-info">
                 <div class="user-avatar">
-                    <?php echo strtoupper(substr($username, 0, 2)); ?>
+                    <?php if (!empty($profileImageUrl)) : ?>
+                        <img src="<?php echo htmlspecialchars($profileImageUrl); ?>" alt="Profile">
+                    <?php else: ?>
+                        <?php echo strtoupper(substr($username, 0, 2)); ?>
+                    <?php endif; ?>
                 </div>
                 <div class="user-details">
                     <div class="user-name"><?php echo htmlspecialchars($username); ?></div>

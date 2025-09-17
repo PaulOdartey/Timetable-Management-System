@@ -472,6 +472,14 @@ if (!function_exists('timeAgo')) {
             display: block;
         }
 
+        /* Ensure the profile avatar image fills the circular container */
+        .avatar-wrapper .profile-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         .student-avatar {
             width: 80px;
             height: 80px;

@@ -966,6 +966,44 @@ body {
     text-decoration: underline;
 }
 
+/* Mobile-optimized notification panel */
+@media (max-width: 768px) {
+    /* Ensure the trigger container doesn't constrain the menu */
+    .notification-dropdown {
+        position: static;
+    }
+
+    /* Turn the dropdown into a full-width panel under the navbar */
+    .notification-menu {
+        position: fixed;
+        top: 64px; /* matches navbar height */
+        left: 0;
+        right: 0;
+        width: 100vw;
+        max-height: calc(100vh - 64px);
+        border-radius: 0 0 12px 12px;
+        border-left: none;
+        border-right: none;
+        transform: translateY(0); /* prevent offscreen transform */
+        opacity: 0;
+        visibility: hidden;
+        overflow: hidden; /* clip header/footer; inner list scrolls */
+        z-index: 1001; /* above content, below any overlays */
+    }
+
+    .notification-menu.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Make the list area scroll within the fixed panel */
+    .notification-list {
+        max-height: calc(100vh - 64px - 56px - 48px); /* total minus header/footer approx */
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    }
+}
+
 /* User Dropdown */
 .user-dropdown {
     position: relative;
