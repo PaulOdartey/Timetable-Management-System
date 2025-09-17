@@ -1,1 +1,20 @@
-Deny from all
+# Exports directory access rules
+ # Allow downloading common export formats, but prevent code execution and directory listing.
+ 
+ # Disable directory listing
+ Options -Indexes
+ 
+ # Block execution of any PHP files in this directory for safety
+ <FilesMatch "\.(php|phtml|php5|php7|php8)$">
+   Require all denied
+ </FilesMatch>
+ 
+ # Allow access to exported documents
+ <FilesMatch "\.(pdf|xlsx|xls|csv|txt|json)$">
+   Require all granted
+ </FilesMatch>
+ 
+ # Default: deny everything else (optional, uncomment if you want a strict allowlist)
+ # <FilesMatch ".*">
+ #   Require all denied
+ # </FilesMatch>
