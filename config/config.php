@@ -69,7 +69,8 @@ define('UPLOADS_PATH', ASSETS_PATH . 'uploads/');
 define('LOGS_PATH', ROOT_PATH . 'logs/');
 
 // Additional Paths (ADD THESE)
-define('BACKUPS_PATH', ROOT_PATH . 'backups/');
+// Use admin/backups/ as the canonical backups directory
+define('BACKUPS_PATH', ROOT_PATH . 'admin/backups/');
 define('EXPORTS_PATH', ROOT_PATH . 'exports/');
 define('PERFORMANCE_LOG_FILE', LOGS_PATH . 'performance.log');
 define('SLOW_QUERY_THRESHOLD', 2.0); // seconds
