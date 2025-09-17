@@ -1,17 +1,108 @@
-# Redirect base URL to public/
+###############################################
+# Timetable Management System - Root .htaccess
+# Environment: Apache 2.4+ (XAMPP)
+###############################################
+
+# ---------------------------------------------
+# 1) Security: Global hardening and headers
+# ---------------------------------------------
+Options -Indexes
+
+<IfModule mod_headers.c>
+    # Basic security headers (also set in PHP as defense-in-depth)
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Prevent caching of dynamic PHP by default (static assets are handled below)
+    <FilesMatch "\.(php|phtml)$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
+# ---------------------------------------------
+# 2) Rewrite rules and routing
+# ---------------------------------------------
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
     # Adjust base to your subfolder path
     RewriteBase /timetable-management/
 
-    # If the request is exactly the project root, redirect to /public/
+    # Redirect project root to public/ landing page
     RewriteRule ^$ public/ [L,R=302]
 
-    # Otherwise, serve existing files/directories normally
+    # Block direct access to sensitive directories (serve 403)
+    RewriteRule ^(config|classes|vendor|logs|database)/ - [F,L]
+
+    # Prevent executing PHP inside assets directory
+    RewriteRule ^assets/.*\.(php|phtml)$ - [F,L]
+
+    # Serve existing files/directories normally
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 </IfModule>
 
-# If mod_rewrite is not available, fall back to a simple redirect using meta refresh can be added to index.php (already handled in PHP)
+# ---------------------------------------------
+# 3) Deny access to specific sensitive files
+# ---------------------------------------------
+<FilesMatch "^(\.env|\.git|composer\.(json|lock)|package\.(json|lock)|phpunit\.xml|.*\.sql|.*\.ini|.*\.sh|.*\.bat)$">
+    Require all denied
+</FilesMatch>
+
+# Disallow reading this file itself
+<Files ".htaccess">
+    Require all denied
+</Files>
+
+# ---------------------------------------------
+# 4) Compression (gzip/deflate) for text assets
+# ---------------------------------------------
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css text/javascript application/javascript application/json application/xml application/rss+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype image/svg+xml
+</IfModule>
+
+# ---------------------------------------------
+# 5) Caching for static assets (improve performance)
+# ---------------------------------------------
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Images: 30 days
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/png  "access plus 30 days"
+    ExpiresByType image/gif  "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+
+    # Fonts: 30 days
+    ExpiresByType font/ttf  "access plus 30 days"
+    ExpiresByType font/otf  "access plus 30 days"
+    ExpiresByType font/woff "access plus 30 days"
+    ExpiresByType font/woff2 "access plus 30 days"
+
+    # CSS/JS: 7 days (cache-busted by file names in production)
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType text/javascript "access plus 7 days"
+
+    # PDFs and documents: 7 days
+    ExpiresByType application/pdf  "access plus 7 days"
+    ExpiresByType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet "access plus 7 days"
+</IfModule>
+
+# ---------------------------------------------
+# 6) Directory-specific protections (defense-in-depth)
+# ---------------------------------------------
+# Note: exports/, cache/, and admin/backups/ already have their own .htaccess files.
+# These global rules ensure protection even if those files are missing.
+
+# Forbid direct access to exports and backups from root rules too
+<IfModule mod_rewrite.c>
+    RewriteRule ^(exports|admin/backups)/ - [F,L]
+</IfModule>
+
+# End of file
