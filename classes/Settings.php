@@ -560,9 +560,30 @@ class Settings {
                 }
             }
             
+            // Normalize backup location: prefer absolute admin/backups by default
+            $defaultBackupDir = (defined('ROOT_PATH') ? ROOT_PATH : realpath(__DIR__ . '/..') . DIRECTORY_SEPARATOR) . 'admin' . DIRECTORY_SEPARATOR . 'backups';
+            $configuredLocation = $this->get('backup_location', $defaultBackupDir);
+            // If configured as relative, resolve against ROOT_PATH
+            if (!preg_match('/^[A-Za-z]:\\\\|^\\\\|^\//', $configuredLocation)) { // not absolute on Windows or *nix
+                $configuredLocation = rtrim((defined('ROOT_PATH') ? ROOT_PATH : realpath(__DIR__ . '/..') . DIRECTORY_SEPARATOR), '\\/') . DIRECTORY_SEPARATOR . ltrim($configuredLocation, '\\/');
+            }
+            $backupLocation = rtrim($configuredLocation, '\\/');
+            
+            // Ensure backup directory exists
+            if (!is_dir($backupLocation)) {
+                if (!mkdir($backupLocation, 0755, true)) {
+                    throw new Exception("Cannot create backup directory: {$backupLocation}");
+                }
+            }
+            // Ensure .htaccess denies direct web access
+            $htaccessPath = $backupLocation . DIRECTORY_SEPARATOR . '.htaccess';
+            if (!file_exists($htaccessPath)) {
+                @file_put_contents($htaccessPath, "Deny from all\n");
+            }
+
             $timestamp = date('Y_m_d_H_i_s');
             $filename = "manual_backup_{$timestamp}.sql";
-            $backupFile = $backupLocation . "/" . $filename;
+            $backupFile = $backupLocation . DIRECTORY_SEPARATOR . $filename;
             
             // Get database name
             $dbResult = $this->db->fetchRow("SELECT DATABASE() as db_name");
@@ -570,14 +591,31 @@ class Settings {
             
             // Include database configuration
             require_once __DIR__ . '/../config/database.php';
-            
-            // Use full path to mysqldump and include credentials
+
+            // Prepare a secure temporary defaults file to avoid exposing credentials on the command line
+            $defaultsFile = tempnam(sys_get_temp_dir(), 'mysqldmp_');
+            $defaultsFileIni = $defaultsFile . '.ini';
+            @unlink($defaultsFile); // We'll use .ini extension
+            $iniContent = "[client]\n" .
+                          "user=" . DB_USER . "\n" .
+                          "password=" . DB_PASS . "\n" .
+                          "host=" . DB_HOST . "\n" .
+                          "port=" . DB_PORT . "\n";
+            if (file_put_contents($defaultsFileIni, $iniContent) === false) {
+                throw new Exception('Failed to create temporary credentials file for backup');
+            }
+
+            // Determine mysqldump path (use XAMPP default if present, else rely on PATH)
+            $mysqldumpPath = 'C:\\xampp\\mysql\\bin\\mysqldump.exe';
+            if (!file_exists($mysqldumpPath)) {
+                $mysqldumpPath = 'mysqldump';
+            }
+
+            // Build command using --defaults-extra-file to suppress insecure password warning
             $command = sprintf(
-                '"C:\\xampp\\mysql\\bin\\mysqldump" --user=%s --password=%s --host=%s --port=%s --single-transaction --routines --triggers --lock-tables=false %s > "%s" 2>"%s"',
-                escapeshellarg(DB_USER),
-                escapeshellarg(DB_PASS),
-                escapeshellarg(DB_HOST),
-                escapeshellarg(DB_PORT),
+                '"%s" --defaults-extra-file="%s" --single-transaction --routines --triggers --lock-tables=false %s > "%s" 2>"%s"',
+                $mysqldumpPath,
+                $defaultsFileIni,
                 escapeshellarg($dbName),
                 $backupFile,
                 $backupFile . '.error.log'
@@ -586,14 +624,24 @@ class Settings {
             // Execute the command
             exec($command, $output, $returnCode);
             
-            // Log the command output for debugging (without exposing password)
-            $maskedCommand = preg_replace('/(--password=)([^\s]+)/', '$1*****', $command);
+            // Log the command path for debugging (do not log credentials)
+            $maskedCommand = preg_replace('/--defaults-extra-file="[^"]+"/', '--defaults-extra-file="***"', $command);
             error_log("Backup command: " . $maskedCommand);
             error_log("Backup output: " . print_r($output, true));
             error_log("Backup return code: " . $returnCode);
+            // Remove the temp defaults file
+            @unlink($defaultsFileIni);
             
             if ($returnCode === 0 && file_exists($backupFile)) {
                 $fileSize = filesize($backupFile);
+                // If error log exists but is empty or contains only harmless warnings, remove it
+                $errLog = $backupFile . '.error.log';
+                if (file_exists($errLog)) {
+                    $errContent = trim((string)@file_get_contents($errLog));
+                    if ($errContent === '' || stripos($errContent, 'Using a password on the command line interface can be insecure') !== false) {
+                        @unlink($errLog);
+                    }
+                }
                 
                 // Insert into existing backup_logs table structure
                 $this->db->execute("
