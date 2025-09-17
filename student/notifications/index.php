@@ -883,6 +883,11 @@ function timeAgo($datetime) {
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            /* Hide the header refresh button on mobile */
+            .refresh-btn {
+                display: none !important;
+            }
+
             .notifications-grid {
                 display: none !important;
             }
@@ -1117,6 +1122,9 @@ function timeAgo($datetime) {
                     <div>
                         <h1 class="page-title">🔔 My Notifications</h1>
                     </div>
+                    <button class="btn-action btn-success refresh-btn" onclick="location.reload()">
+                        🔄 Refresh
+                    </button>
                 </div>
             </div>
         </div>

@@ -754,6 +754,11 @@ function formatCount($count) {
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            /* Hide the header refresh button on mobile */
+            .refresh-btn {
+                display: none !important;
+            }
+
             .export-grid {
                 display: none !important;
             }
@@ -850,6 +855,9 @@ function formatCount($count) {
                     <div>
                         <h1 class="page-title">📥 My Exports</h1>
                     </div>
+                    <button class="btn-action btn-success refresh-btn" onclick="location.reload()">
+                        🔄 Refresh
+                    </button>
                 </div>
             </div>
         </div>

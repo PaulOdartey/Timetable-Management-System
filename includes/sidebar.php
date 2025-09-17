@@ -49,10 +49,7 @@ $navigationMenus = [
                     'title' => 'Create User',
                     'url' => 'admin/users/create.php'
                 ],
-                [
-                    'title' => 'User Reports',
-                    'url' => 'admin/users/reports.php'
-                ]
+               
             ]
         ],
         [
