@@ -907,16 +907,6 @@ $currentPage = "dashboard";
             outline-offset: 2px;
         }
 
-        /* Print styles */
-        @media print {
-            body { background: white !important; }
-            .glass-card { 
-                background: white !important;
-                border: 1px solid #ddd !important;
-                box-shadow: none !important;
-            }
-            .quick-actions { display: none; }
-        }
 
         /* High contrast mode support */
         @media (prefers-contrast: high) {

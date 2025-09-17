@@ -1,4 +1,10 @@
  <?php
+ // Minimal fallback redirect to public/ (in case .htaccess isn't honored)
+ // Do this before any output or heavy includes
+ if (PHP_SAPI !== 'cli') {
+     header('Location: public/');
+     exit;
+ }
 /**
  * Timetable Management System - Main Entry Point
  * 
