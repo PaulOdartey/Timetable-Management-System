@@ -18,13 +18,13 @@ require_once '../config/database.php';
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     switch ($_SESSION['role']) {
         case 'admin':
-            header('Location: admin/index.php');
+            header('Location: ' . BASE_URL . 'admin/');
             exit;
         case 'faculty':
-            header('Location: faculty/index.php');
+            header('Location: ' . BASE_URL . 'faculty/');
             exit;
         case 'student':
-            header('Location: student/index.php');
+            header('Location: ' . BASE_URL . 'student/');
             exit;
     }
 }
